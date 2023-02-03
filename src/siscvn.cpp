@@ -2,26 +2,26 @@
 #include <iostream>
 #include <filesystem>
 
-#include "src/file.hpp"
-#include "src/assembler/asm.hpp"
-#include "src/virtual_machine/Processor.hpp"
+#include "file.hpp"
+#include "assembler/asm.hpp"
+#include "virtual_machine/Processor.hpp"
 
-#include "src/exceptions/argcError.hpp"
-#include "src/exceptions/ExtensionError.hpp"
-#include "src/exceptions/ActionError.hpp"
+#include "exceptions/argcError.hpp"
+#include "exceptions/ExtensionError.hpp"
+#include "exceptions/ActionError.hpp"
 
-#include "src/exceptions/constant/CapacityExceededError.hpp"
-#include "src/exceptions/constant/ConstantParsingError.hpp"
+#include "exceptions/constant/CapacityExceededError.hpp"
+#include "exceptions/constant/ConstantParsingError.hpp"
 
-#include "src/exceptions/compile_error/AssemblerError.hpp"
-#include "src/exceptions/compile_error/ParametersError.hpp"
-#include "src/exceptions/compile_error/RegisterError.hpp"
-#include "src/exceptions/compile_error/UndefinedInstructionError.hpp"
+#include "exceptions/compile_error/AssemblerError.hpp"
+#include "exceptions/compile_error/ParametersError.hpp"
+#include "exceptions/compile_error/RegisterError.hpp"
+#include "exceptions/compile_error/UndefinedInstructionError.hpp"
 
-#include "src/exceptions/runtime_error/RuntimeError.hpp"
-#include "src/exceptions/runtime_error/InvalidInputError.hpp"
-#include "src/exceptions/runtime_error/UnauthorizedDataPortAccessError.hpp"
-#include "src/exceptions/runtime_error/UninitializedMemoryAccessError.hpp"
+#include "exceptions/runtime_error/RuntimeError.hpp"
+#include "exceptions/runtime_error/InvalidInputError.hpp"
+#include "exceptions/runtime_error/UnauthorizedDataPortAccessError.hpp"
+#include "exceptions/runtime_error/UninitializedMemoryAccessError.hpp"
 
 using namespace std;
 

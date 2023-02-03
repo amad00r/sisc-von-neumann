@@ -1,5 +1,4 @@
 .vscode/
 tests/
+build/
 todo/
-compile.sh
-sisa.x
