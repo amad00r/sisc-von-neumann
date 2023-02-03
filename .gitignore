@@ -1,0 +1,5 @@
+.vscode/
+tests/
+todo/
+compile.sh
+sisa.x

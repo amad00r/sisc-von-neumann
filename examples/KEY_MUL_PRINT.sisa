@@ -1,0 +1,27 @@
+; this program reads 2 values a and b, from the keyboard, and prints the 16 bits result of multiplying them
+; when it finishes, it starts a new execution
+
+IN      R6, 1
+BZ      R6, -2
+IN      R6, 0       ; R6 = a
+
+IN      R7, 1
+BZ      R7, -2
+IN      R7, 0       ; R7 = b
+
+MOVI    R5, 0
+MOVI    R1, 1
+MOVI    R3, -1
+AND     R4, R7, R1
+BZ      R4, 1
+ADD     R5, R5, R6
+SHL     R6, R6, R1
+SHL     R7, R7, R3
+BNZ     R7, -6
+
+IN      R0, 2
+BZ      R0, -2
+OUT     0, R5
+
+
+BZ      R7, -19     ; goto first instruction

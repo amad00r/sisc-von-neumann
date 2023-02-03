@@ -1,0 +1,41 @@
+; this program reads N bytes from the keyborad where N has to be less than 32 not to overwrite
+; the existing code of the program.
+; then, stores them in a vector and finally prints them
+; when it finishes, it starts a new execution
+
+IN      R1, 1
+BZ      R1, -2
+IN      R1, 0           ; R1 = N
+
+
+; this block of code is for storing the input values in a vector
+MOVI    R0, 0
+CMPLTU  R2, R0, R1      ; N > 0 ???
+BZ      R2, 6
+
+IN      R3, 1
+BZ      R3, -2
+IN      R3, 0
+
+STB     -32(R0), R3
+
+ADDI    R0, R0, 1
+BNZ     R2, -8
+
+
+; this block of code is for printing the elements of the vector
+MOVI    R0, 0
+CMPLTU  R2, R0, R1      ; N > 0 ???
+BZ      R2, 6
+
+LDB     R3, -32(R0)
+
+IN      R4, 2
+BZ      R4, -2
+OUT     0, R3
+
+ADDI    R0, R0, 1
+BNZ     R2, -8
+
+
+BZ      R2, -22         ; goto first instruction

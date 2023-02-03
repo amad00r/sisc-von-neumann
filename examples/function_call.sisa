@@ -1,0 +1,14 @@
+MOVI R1, 0x000C
+
+IN R7, 1
+BZ R7, -2
+IN R0, 0
+JALR R7, R1
+BNZ R7, -5
+
+
+
+IN R7, 2
+BZ R7, -2
+OUT 0, R0
+JALR R7, R7

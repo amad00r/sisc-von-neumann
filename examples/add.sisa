@@ -1,0 +1,8 @@
+MOVI R0, 5
+MOVI R1, 10
+
+ADD R7, R0, R1
+
+IN R4, 2
+BZ R4, -2
+OUT 0, R7
