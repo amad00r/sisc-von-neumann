@@ -1,11 +1,10 @@
 #include <bitset>
-#include <vector>
 
 using namespace std;
 
 class Regfile {
     private:
-    vector<bitset<16>> regfile = vector<bitset<16>>(8, 0);
+    bitset<16> regfile[8];
 
     public:
     bitset<16> A = bitset<16>(0);
