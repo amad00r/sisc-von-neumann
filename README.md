@@ -7,6 +7,8 @@ SISC Vonn Neumann instructions
 - A virtual machine which can execute these 16 bit instructions by
 emulating a SISC Von Neumann computer
 
+Download the latest release for Linux or Windows from: https://github.com/amad00r/sisc-von-neumann/releases
+
 ## command-line usage
 
 ### build
