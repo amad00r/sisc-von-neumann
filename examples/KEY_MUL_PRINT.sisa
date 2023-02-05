@@ -1,4 +1,6 @@
-; this program reads 2 values a and b, from the keyboard, and prints the 16 bits result of multiplying them
+; this program reads 2 values a and b, from the keyboard, 
+; and prints the 16 bits result of multiplying them.
+;
 ; when it finishes, it starts a new execution
 
 IN      R6, 1
