@@ -18,7 +18,7 @@ SISC Von Neumann, use the command:
 siscvn build /local/path/to/file.sisa
 ```
 
-This command will create a .bin file with same name and location as
+This command will create a .bin file with the same name and location as
 the source file.
 
 ### run
@@ -47,13 +47,12 @@ siscvn [readbin/readhex] /local/path/to/file.bin
 
 ## example of usage
 
-Imagine this scenario, you are studying for an IC exam and there's
-this question which asks you to give a program in SISA and
-hexadecimal instructions which takes a whole number from the input
-and writes its absolute value in the output. 
+Imagine this scenario: you are studying for an IC exam and you are asked
+to write a program in SISA and translate it to hexadecimal instructions.
+It must take a whole number as input and write its absolute value as output.
 
 When you have finished thinking about the implementation of the
-problem, writing down in paper the instructions, and its translation
+problem, writing down in paper the instructions, and doing its translation
 into hexadecimal, it is the perfect time for using this tool.
 
 ### 1. writing the program
@@ -74,8 +73,8 @@ MOVI R5, 0x00
 MOVHI R5, 0x80      ; R5 contains a mask to check the highest bit
 AND R7, R0, R5
 BZ R7, 2            ; if the highest bit is 0, the number is positive
-                    ; and we want to output it as is
-NOT R0, R0          ; else, flip its bits and increment it in 1
+                    ; and we want to output it as it is
+NOT R0, R0          ; else, we want to flip its bits and increment it in 1
 ADDI R0, R0, 1
 
 
@@ -144,8 +143,7 @@ siscvn readhex examples/absolute_value.bin
 ```
 
 If the assembler did not find any issues, it should have generated
-this file: `examples/absolute_value.bin`, and then outputed its
-content through the terminal like this:
+this file: `examples/absolute_value.bin`, and then it should have outputted its content through the terminal like this:
 
 ```
 $ siscvn build examples/absolute_value.sisa
@@ -171,13 +169,13 @@ correct.
 
 The SISA assembler is currently under development.
 
-supports:
+it supports:
 
 - comments with the semicolon syntax
 - decimal and hexadecimal constants as instruction arguments
 - all defined SISA instructions
 
-does not support:
+it does not support:
 
 - labels
 - sections
@@ -189,32 +187,24 @@ The virtual machine consists of some components: Alu, InputOutput,
 Memory, Regfile and ControlUnit. And some registers: RX, RY, IR, R@
 and PC.
 
-In this section I will discuss the approach i took in the
-implementation of some of these components, that i consider important
-for later using this tool.
+In this section I will discuss my approach to the implementation of some of these components in c++. This will bring light to the working of the virtual machine and explain why certain decisions were taken in the implementation. 
 
 ### Regfile
 
-For simulating the workings of the Regfile I used a `bitset<16>[8]`
-array. This way it is possible to access the value of any register
-by indexing its id.
+To simulate how the Regfile works, I used a `bitset<16>[8]` array. This way it is possible to access/store a value of any register by indexing its id.
 
 It is important to mention that every register is being initialized
 to 0. Since RX and RY registers are taking values from the Regfile
-every cicle of the execution, I cannot have registers uninitialized.
+every cycle of the execution, registers must not be uninitialized in order to prevent unexpected behaviors.
 
 ### Memory
 
-For simulating the workings of the Memory I used an
+To simulate how the Memory works, I used an
 `unordered_map<bitset<16>, bitset<8>>` data structure.
 
-The program does not reserve 64kb of empty memory that will not
-likely be used. It instead starts with an empty unordered_map that
-will grow in size when the program is allocated into memory
-(starting in 0x0000), and during its execution if some value is
-allocated into memory with LD or LDB.
+The program does not reserve 64kb of memory that are not likely to be used. Instead, it starts with an empty unordered_map that will grow in size when the program is allocated into memory (starting in 0x0000), and during its execution if some value is allocated into memory with LD or LDB.
 
-Following this aproach it is possible to throw a RuntimeError when
+Following this approach it is possible to throw a RuntimeError when
 uninitialized memory is being accessed.
 
 #### Program interruption
@@ -224,7 +214,7 @@ exception when an uninitialized memory access happens, is that the
 virtual machine is now able to interrupt the execution of the
 program when no more instructions are found.
 
-Since the SISC Von Neumann does not have an OS nor interruptions, it
+Since the SISC Von Neumann does not have neither OS nor interruptions, it
 does not have a mechanism to stop execution. The most elegant way I
 found for dealing with this problem (while preserving SISC Von
 Neumann features, such as being able to write code that dynamically
@@ -234,14 +224,18 @@ from an uninitialized position in memory.
 
 ### InputOutput
 
-For simulating the workings of the InputOutput I used the stdin for
+- KEY-DATA: port 0
+- KEY-STATUS: port 1
+- PRINT-DATA: port 0
+- PRINT-STATUS: port 2
+
+To simulate how the InputOutput works, I used the stdin for
 the keyboard and the stdout for the printer.
 
-When accessing keyboard data using IN, the virtual machine will ask
-the user to provide a 16 bit capacity whole number or hexadecimal.
+When accessing keyboard data port using IN, the virtual machine will ask
+the user to provide a 16 bit representable whole number or hexadecimal.
 
-When writing to the printer using OUT, the virtual machine will output
-16 bits and a newline through the stdout.
+When writing to the printer data port using OUT, the virtual machine will output 16 bits and a newline through the stdout.
 
 Remember that before accessing or writing to a data port, it is
 necessary to check for its status port to see if the device is operative. If you skip this step, a RuntimeError will be thrown.
