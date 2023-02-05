@@ -60,7 +60,7 @@ into hexadecimal, it is the perfect time for using this tool.
 First, write a .sisa file with the solution you propose (in this case
 you can find the solution in /examples/absolute_value.sisa):
 
-```arm
+```nasm
 ; we want to write to the printer the absolute value of the
 ; input that we get from the keyboard interpreted as Ca2
 
@@ -119,7 +119,7 @@ $ siscvn run examples/absolute_value.sisa
 Key-Req = 1
 KEY-DATA = -123
 0000000001111011
-RuntimeError: execution of the program was aborted while executing the instruction (1010000100000000) stored in memory address (0000000000010110)
+RuntimeError: execution of the program was aborted while state = FETCH, IR = 1010000100000000, PC = 0000000000011000
 UninitializedMemoryAccessError: access to an uninitialized word stored in (0000000000011000) was attempted
 ```
 
@@ -221,6 +221,10 @@ Neumann features, such as being able to write code that dynamically
 writes more code, or not having instructions and data segregation)
 is by throwing an exception when it tries to fetch an instruction
 from an uninitialized position in memory.
+
+To determine that an UninitializedMemoryAccessError has happened because of
+reaching the end of the program, take a look at the state of the virtual machine:
+it should be FETCH.
 
 ### InputOutput
 

@@ -6,6 +6,7 @@
 #include "components/Regfile.hpp"
 #include "components/InputOutput.hpp"
 #include "components/control_unit/ControlUnit.hpp"
+#include "components/control_unit/states.hpp"
 
 #include "../exceptions/runtime_error/RuntimeError.hpp"
 #include "../exceptions/runtime_error/InvalidInputError.hpp"
@@ -110,19 +111,19 @@ class Processor {
             }
         }
         catch (InvalidInputError& e) {
-            throw RuntimeError(ir, bitset<16>(pc.to_ulong() - 2), e);
+            throw RuntimeError(ir, pc, state_to_string(control_unit.current_state), e);
         }
         catch (UnauthorizedDataPortAccessError& e) {
-            throw RuntimeError(ir, bitset<16>(pc.to_ulong() - 2), e);
+            throw RuntimeError(ir, pc, state_to_string(control_unit.current_state), e);
         }
         catch (UninitializedMemoryAccessError& e) {
-            throw RuntimeError(ir, bitset<16>(pc.to_ulong() - 2), e);
+            throw RuntimeError(ir, pc, state_to_string(control_unit.current_state), e);
         }
         catch (CapacityExceededError& e) {
-            throw RuntimeError(ir, bitset<16>(pc.to_ulong() - 2), e);
+            throw RuntimeError(ir, pc, state_to_string(control_unit.current_state), e);
         }
         catch (ConstantParsingError& e) {
-            throw RuntimeError(ir, bitset<16>(pc.to_ulong() - 2), e);
+            throw RuntimeError(ir, pc, state_to_string(control_unit.current_state), e);
         }
     }
 };

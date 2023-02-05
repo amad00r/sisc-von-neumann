@@ -14,9 +14,12 @@ class ControlUnit {
     RomOutSignals signals_rom;
 
     public:
+    int current_state;
     ControlSignals signals;
 
     void run(const bitset<16>& instruction) {
+        current_state = state;
+
         signals_rom = rom_out_signals(state);
 
         signals.WrMem = signals_rom.WrMem;
