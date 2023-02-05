@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 using namespace std;
 
@@ -8,9 +9,9 @@ class ExtensionError : public exception {
     string msg, extension;
 
     public:
-    ExtensionError(const string& s, const string& ext) {
+    ExtensionError(const string& s, const filesystem::path& ext) {
         msg = s;
-        extension = ext;
+        extension = ext.string();
     }
 
     void explain() {

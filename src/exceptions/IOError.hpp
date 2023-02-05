@@ -8,9 +8,9 @@ class IOError : public exception {
     string msg, file_path;
 
     public:
-    IOError(const string& s, const string& path) {
+    IOError(const string& s, const filesystem::path& path) {
         msg = s;
-        file_path = path;
+        file_path = path.string();
     }
 
     void explain() {
