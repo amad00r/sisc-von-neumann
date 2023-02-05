@@ -117,14 +117,14 @@ port, that we can input as a whole number or an hexadecimal.
 ```
 $ siscvn run examples/absolute_value.sisa
 Key-Req = 1
-KEY-DATA = -110
-0000000001101110
+KEY-DATA = -123
+0000000001111011
 RuntimeError: execution of the program was aborted while executing the instruction (1010000100000000) stored in memory address (0000000000010110)
 UninitializedMemoryAccessError: access to an uninitialized word stored in (0000000000011000) was attempted
 ```
 
-After inputing -110, an arbitrary number I selected, we should see the
-line: 0000000001101110, which, in fact, represents the number 110 in
+After inputing -123, an arbitrary number I selected, we should see the
+line: 0000000001111011, which, in fact, represents the number 123 in
 decimal.
 
 Finally, we see an error that can be ignored, which is intentional
