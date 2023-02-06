@@ -46,14 +46,14 @@ class InputOutput {
     void ask_key_status() {
         cout << "Key-Req = ";
         string input;
-        cin >> input;
+        getline(cin, input);
         key_status = input_status_value(input);
     }
 
     void ask_key_data() {
         cout << "KEY-DATA = ";
         string input;
-        cin >> input;
+        getline(cin, input);
         key_data = input_data_value(input);
     }
 
