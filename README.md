@@ -72,10 +72,10 @@ IN R0, 0
 
 
 MOVI R5, 0x00
-MOVHI R5, 0x80      ; R5 contains a mask to check the highest bit
-AND R7, R0, R5
-BZ R7, 2            ; if the highest bit is 0, the number is positive
-                    ; and we want to output it as it is
+CMPLT R7, R0, R5
+BZ R7, 2            ; if R0 >= 0 we want to output it as it is, so we jump
+                    ; directly to line 18
+
 NOT R0, R0          ; else, we want to flip its bits and increment it in 1
 ADDI R0, R0, 1
 
@@ -121,8 +121,8 @@ $ siscvn run examples/absolute_value.sisa
 Key-Req = 1
 KEY-DATA = -123
 0000000001111011
-RuntimeError: execution of the program was aborted while state = FETCH, IR = 1010000100000000, PC = 0000000000011000
-UninitializedMemoryAccessError: access to an uninitialized word stored in (0000000000011000) was attempted
+RuntimeError: execution of the program was aborted while state = FETCH, IR = 1010000100000000, PC = 0000000000010110
+UninitializedMemoryAccessError: access to an uninitialized word stored in (0000000000010110) was attempted
 ```
 
 After inputing -123, an arbitrary number I selected, we should see the
@@ -154,8 +154,7 @@ A001
 80FE
 A000
 9A00
-9B80
-0178
+1178
 8E02
 0003
 2001
@@ -250,5 +249,4 @@ When accessing the keyboard status port, the virtual machine will ask
 the user to provide 1 bit to simulate the Key-Req.
 
 When accessing the printer, the Print-Req will automatically value 1.
-As a side effect of writing to printer data port, Print-Req will value
-0.
+As a side effect of writing to printer data port, Print-Req will value 0.

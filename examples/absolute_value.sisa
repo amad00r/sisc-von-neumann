@@ -7,10 +7,10 @@ IN R0, 0
 
 
 MOVI R5, 0x00
-MOVHI R5, 0x80      ; R5 contains a mask to check the highest bit
-AND R7, R0, R5
-BZ R7, 2            ; if the highest bit is 0, the number is positive
-                    ; and we want to output it as it is
+CMPLT R7, R0, R5
+BZ R7, 2            ; if R0 >= 0 we want to output it as it is, so we jump
+                    ; directly to line 18
+
 NOT R0, R0          ; else, we want to flip its bits and increment it in 1
 ADDI R0, R0, 1
 
