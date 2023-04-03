@@ -47,12 +47,12 @@ int main(int argc, char** argv) {
             if (file_path.extension() == ".sisa") {
                 Processor cpu;
                 cpu.load(assemble_sisa(read_file(file_path)));
-                cpu.mainloop();
+                cpu.execute();
             }
             else if (file_path.extension() == ".bin") {
                 Processor cpu;
                 cpu.load(read_binary(file_path));
-                cpu.mainloop();
+                cpu.execute();
             }
             else throw ExtensionError("`run` expects a .sisa or .bin file", file_path.extension());
         }
